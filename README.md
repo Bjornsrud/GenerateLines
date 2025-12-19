@@ -89,7 +89,7 @@ generatelines version
   Repeat a single character (requires `modeArg`)
 
 - `pi`  
-  Digits of π (π) as **raw numeric characters (`0–9`)**  
+  Digits of PI (π) as **raw numeric characters (`0–9`)**  
   Total digits generated = `lines × width`
 
   Optional modeArg:
