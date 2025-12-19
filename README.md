@@ -1,6 +1,6 @@
 # GenerateLines
 
-GenerateLines is a small CLI utility written in Go that generates text files with a specified number of lines and a fixed line width. It’s useful for testing editors, import pipelines, log processors, and tools that need predictable, repeatable text input.
+GenerateLines is a CLI utility written in Go that generates text files with a specified number of lines and a fixed line width. It’s useful for testing editors, import pipelines, log processors, and tools that need predictable, repeatable text input.
 
 ## Features
 
@@ -53,7 +53,6 @@ The binary will be placed in your Go bin directory (commonly `$(go env GOPATH)/b
 go build -o generatelines.exe .
 ```
 
-
 ## Usage
 
 ```text
@@ -77,12 +76,25 @@ generatelines version
 
 ## Modes
 
-- `ascii`  Printable ASCII characters (32–126)
-- `digits` Digits `0–9`
-- `upper`  Uppercase letters `A–Z`
-- `char`   Repeat a single character (requires `modeArg`)
-- `pi`     Digits of π mapped to printable ASCII characters  
-          Total digits generated = `lines × width`
+- `ascii`  
+  Printable ASCII characters (32–126)
+
+- `digits`  
+  Digits `0–9`
+
+- `upper`  
+  Uppercase letters `A–Z`
+
+- `char`  
+  Repeat a single character (requires `modeArg`)
+
+- `pi`  
+  Digits of π (π) as **raw numeric characters (`0–9`)**  
+  Total digits generated = `lines × width`
+
+  Optional modeArg:
+  - `ascii`  
+    Map π digits (`0–9`) to printable ASCII characters (legacy behavior)
 
 ## Examples
 
@@ -110,15 +122,22 @@ Single repeated character:
 generatelines 200 hashes.txt y 80 char #
 ```
 
-π-mapped output:
+π digits (default pi behavior):
 
 ```bash
-generatelines 100 pi.txt y 80 pi
+generatelines 100 pi_digits.txt y 80 pi
+```
+
+π digits mapped to printable ASCII characters:
+
+```bash
+generatelines 100 pi_ascii.txt y 80 pi ascii
 ```
 
 ## Fun fact
 
-This utility was originally written to answer a very practical question: **how many lines of text the new Microsoft Edit could handle** before things started getting interesting.
+This utility was originally written to answer a very practical question:  
+**how many lines of text the new Microsoft Edit could handle** before things started getting interesting.
 
 ## Author
 

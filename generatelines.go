@@ -14,7 +14,7 @@ const (
 	defaultWidth = 80
 	authorName   = "Christian K. Bjørnsrud"
 	repoURL      = "https://github.com/CKB78/GenerateLines"
-	version      = "1.0.0"
+	version      = "1.0.1"
 )
 
 func main() {
@@ -178,7 +178,10 @@ Modes:
   upper        Uppercase letters A–Z
   char         Repeat a single character (requires modeArg)
                Example: generatelines 100 out.txt y 80 char #
-  pi           Digits of pi mapped to printable ASCII characters
+  pi           Digits of pi (default: digits)
+               modeArg: digits | ascii
+               digits -> pure pi digits (0–9)
+               ascii  -> pi digits mapped to printable ASCII (32–126)
                Total digits generated = lines × width
 
 Notes:
@@ -407,7 +410,20 @@ func newGenerator(mode, modeArg string, totalChars int) (Generator, error) {
 		if totalChars <= 0 {
 			totalChars = 1
 		}
-		palette := []byte(buildAsciiSequence())
+
+		arg := strings.ToLower(strings.TrimSpace(modeArg))
+		var palette []byte
+		switch arg {
+		case "", "digits":
+			// Default: emit pure pi digits (0–9).
+			palette = []byte("0123456789")
+		case "ascii":
+			// Legacy: map pi digits onto printable ASCII (32–126).
+			palette = []byte(buildAsciiSequence())
+		default:
+			return nil, fmt.Errorf("mode=pi unknown modeArg: %s (expected digits or ascii)", modeArg)
+		}
+
 		return &piGen{
 			palette: palette,
 			spigot:  newPiSpigot(totalChars),

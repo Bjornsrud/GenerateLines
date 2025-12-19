@@ -8,7 +8,7 @@ import (
 
 func TestBuildAsciiSequence(t *testing.T) {
 	s := buildAsciiSequence()
-	if len(s) != (126-32+1) {
+	if len(s) != (126 - 32 + 1) {
 		t.Fatalf("expected ascii palette length 95, got %d", len(s))
 	}
 	if s[0] != byte(32) || s[len(s)-1] != byte(126) {
@@ -80,7 +80,6 @@ func TestGenerator_ASCII(t *testing.T) {
 	}
 }
 
-
 func TestGenerator_Digits(t *testing.T) {
 	g, err := newGenerator("digits", "", 1000)
 	if err != nil {
@@ -140,11 +139,37 @@ func TestPiSpigot_FirstDigits(t *testing.T) {
 	}
 }
 
+func TestGenerator_PiMode_Digits_Default(t *testing.T) {
+	// In pi mode (default), output should be the raw pi digits as characters '0'..'9'.
+	g, err := newGenerator("pi", "", 80) // totalChars used only for spigot sizing
+	if err != nil {
+		t.Fatalf("unexpected err: %v", err)
+	}
+
+	line := g.NextLine(10)
+	if len(line) != 10 {
+		t.Fatalf("expected length 10, got %d", len(line))
+	}
+
+	// First digits of pi: 3,1,4,1,5,9,2,6,5,3
+	want := "3141592653"
+	if line != want {
+		t.Fatalf("unexpected pi-digits line.\nwant: %q\ngot:  %q", want, line)
+	}
+
+	// Also assert digits only, just to be safe.
+	for i := 0; i < len(line); i++ {
+		if line[i] < '0' || line[i] > '9' {
+			t.Fatalf("expected digit at %d, got %q", i, line[i])
+		}
+	}
+}
+
 func TestGenerator_PiMode_MappingToAsciiPalette(t *testing.T) {
-	// In pi mode, digits 0..9 are mapped to printable ASCII palette by index.
+	// In pi mode with modeArg=ascii, digits 0..9 are mapped to printable ASCII palette by index.
 	// Palette index 0 corresponds to ASCII 32 (space), 1 -> '!', etc.
 	// So digit '3' maps to palette[3] = ASCII 35 '#'
-	g, err := newGenerator("pi", "", 80) // totalChars used only for spigot sizing
+	g, err := newGenerator("pi", "ascii", 80) // totalChars used only for spigot sizing
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
