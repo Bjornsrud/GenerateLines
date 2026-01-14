@@ -1,10 +1,9 @@
 # GenerateLines
 
-GenerateLines is a CLI utility written in Go that generates text files with a specified number of lines and a fixed line width. It’s useful for testing editors, import pipelines, log processors, and tools that need predictable, repeatable text input.
+GenerateLines is a CLI utility written in Go that generates text files with a specified number of lines and a fixed line width, and with various optional types of generated content. 
 
 ## Features
 
-- Cross-platform (Windows, macOS, Linux)
 - Interactive mode when required parameters are omitted
 - Fixed line width (default: 80 columns)
 - Multiple output modes: `ascii`, `digits`, `upper`, `char`, `pi`
@@ -12,12 +11,9 @@ GenerateLines is a CLI utility written in Go that generates text files with a sp
 
 ## Installation
 
-### Prerequisites
+### Requirements
 
-- Go installed and available on your `PATH` (Go 1.20+ recommended)
-- If you use the optional “install system-wide” step on Linux/macOS:
-  - You need permission to write to the target directory (typically via `sudo`)
-  - The target directory (e.g. `/usr/local/bin`) should exist and be on your `PATH`
+Go 1.20+
 
 ### Build from source
 
@@ -28,24 +24,6 @@ Build a local binary in the current directory:
 ```bash
 go build -o generatelines .
 ```
-
-Optionally install system-wide:
-
-```bash
-sudo install -m 0755 generatelines /usr/local/bin/generatelines
-```
-
-> Note: On some macOS setups (especially Homebrew on Apple Silicon), you may prefer `/opt/homebrew/bin` instead of `/usr/local/bin` if that’s what’s on your `PATH`.
-
-#### Alternative: install to your Go bin directory
-
-If you prefer not to use `sudo`, you can install to your Go bin directory:
-
-```bash
-go install .
-```
-
-The binary will be placed in your Go bin directory (commonly `$(go env GOPATH)/bin`). Make sure that directory is on your `PATH`.
 
 #### Windows
 
@@ -136,8 +114,9 @@ generatelines 100 pi_ascii.txt y 80 pi ascii
 
 ## Fun fact
 
-This utility was originally written to answer a very practical question:  
-**how many lines of text the new Microsoft Edit could handle** before things started getting interesting.
+This utility was initially written to answer a very practical question:  
+**how many lines of text can the new Microsoft Edit handle** before things started getting interesting.
+Then things got a bit out of hand. :D
 
 ## Author
 
