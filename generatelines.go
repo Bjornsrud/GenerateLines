@@ -114,7 +114,7 @@ func main() {
 	}
 
 	if mode == "pi" && totalChars >= 20000 {
-		fmt.Println("Note: Pi generation scales approximately quadratically (O(n²)); runtime may increase much faster than linearly as the number of digits grows.")
+		fmt.Println("\nNote: Pi generation scales approximately quadratically (O(n²));\nruntime may increase much faster than linearly as the number of digits grows.\n")
 	}
 
 	fmt.Printf(
