@@ -113,6 +113,10 @@ func main() {
 		defaultNote = " [using default mode]"
 	}
 
+	if mode == "pi" && totalChars >= 20000 {
+		fmt.Println("Note: Pi generation scales approximately quadratically (O(n²)); runtime may increase much faster than linearly as the number of digits grows.")
+	}
+
 	fmt.Printf(
 		"Generating %d lines (width=%d, mode=%s)%s -> %s\n",
 		lines, width, mode, defaultNote, filename,
