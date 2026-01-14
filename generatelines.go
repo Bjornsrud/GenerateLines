@@ -8,13 +8,14 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
 	defaultWidth = 80
 	authorName   = "Christian K. Bjørnsrud"
 	repoURL      = "https://github.com/CKB78/GenerateLines"
-	version      = "1.0.1"
+	version      = "1.0.2"
 )
 
 func main() {
@@ -117,8 +118,9 @@ func main() {
 		lines, width, mode, defaultNote, filename,
 	)
 
+	start := time.Now() // Start timing how long it took
+
 	w := bufio.NewWriterSize(f, 1024*64)
-	defer w.Flush()
 
 	gen, err := newGenerator(mode, modeArg, totalChars)
 	if err != nil {
@@ -134,7 +136,18 @@ func main() {
 		}
 	}
 
-	fmt.Println("Done!")
+	if err := w.Flush(); err != nil {
+		fmt.Fprintln(os.Stderr, "Error flushing:", err)
+		os.Exit(1)
+	}
+
+	elapsed := time.Since(start)
+
+	fmt.Printf("Done in %s (%d characters)\n", elapsed.Round(time.Millisecond), totalChars)
+
+	if mode == "pi" {
+		fmt.Printf("Pi digits generated: %d\n", totalChars)
+	}
 }
 
 // helpHint returns the preferred help command hint for the current OS.
