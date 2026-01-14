@@ -2,6 +2,8 @@
 
 GenerateLines is a CLI utility written in Go that generates text files with a specified number of lines and a fixed line width, and with various optional types of generated content. 
 
+<img width="873" height="245" alt="image" src="https://github.com/user-attachments/assets/5030dff6-0889-43e5-bfd4-3b6f8e3475de" />
+
 ## Features
 
 - Interactive mode when required parameters are omitted
